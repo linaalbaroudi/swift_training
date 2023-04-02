@@ -19,6 +19,10 @@ class Book{
     self.quantity = quantity ?? 0
   }
 
+  func toString() -> String {
+    return "id: \(self.id), title: \(self.title), author: \(self.author), price: \(self.price ?? 0), quantity: \(self.quantity ?? 0),"
+  }
+
 }
 
 var books = [
@@ -30,14 +34,15 @@ var books = [
 ]
 
 /* Q1: يمكن من خلال البرنامج الاستعلام عن كتاب عن طريق:
-
 رقم الكتاب Book Id.
 عنوان الكتاب Title.
 اسم المؤلف Author.
 */
 // Q1.1 Book Id.
 print("Q1.1: Book Id.")
-
+for book in books {
+  print(book.toString())
+}
 
 // Q1.2
 print("Q1.2: Title.")
