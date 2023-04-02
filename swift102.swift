@@ -5,10 +5,10 @@ Swift102 course project
 */ 
 
 class Book{
-  var id : Int
-  var title : String
-  var author : String
-  var price : Double?
+  let id : Int
+  let title : String
+  let author : String
+  let price : Double?
   var quantity : Int?
 
   init (id: Int, title: String, author: String, price: Double?, quantity: Int?){
@@ -23,6 +23,25 @@ class Book{
     return "id: \(self.id), title: \(self.title), author: \(self.author), price: \(self.price ?? 0), quantity: \(self.quantity ?? 0),"
   }
 
+  func isQuantityEnough(order: Int) -> Bool {
+    if (order <= 0 ){
+      return false
+    }
+    if (self.quantity! >= order){
+      return true
+    }
+    return false
+  }
+
+  func orderBooks(quantity: Int) -> Int{
+    if (isQuantityEnough(order: quantity)){
+      self.quantity! -= quantity
+      print("Thanks for your order! There is \(self.quantity!) books left in storage.")
+      return self.quantity!
+    }
+    print("Sorry, your order cannot be fullfiled! either we don't have enough book or your order is not valid.")
+    return -1
+  }
 }
 
 var books = [
@@ -39,22 +58,51 @@ var books = [
 اسم المؤلف Author.
 */
 // Q1.1 Book Id.
-print("Q1.1: Book Id.")
-for book in books {
-  print(book.toString())
+print("\nQ1.1: Book ID = 1")
+func getBookByID(id: Int){
+  for book in books{
+    if(book.id == id){
+      print(book.toString())
+      break
+    }
+  }
 }
+getBookByID(id: 1)
 
 // Q1.2
-print("Q1.2: Title.")
+print("\nQ1.2: Title = Clean Code")
+func getBookByTitle(title: String){
+  for book in books{
+    if(book.title == title){
+      print(book.toString())
+      break
+    }
+  }
+}
+getBookByTitle(title: "Clean Code")
 
 
 // Q1.3
-print("Q1.2: Author.")
+print("\nQ1.3: Author = Kyle Simpson")
+func getBookByAuthor(author: String){
+  for book in books{
+    if(book.author == author){
+      print(book.toString())
+      break
+    }
+  }
+}
+getBookByAuthor(author: "Kyle Simpson")
 
 
 // Q2.1
-print("Q2.1: التحقق من وجود كمية كافية من الكتاب المُراد بيعه في المخزن.")
-
+print("\nQ2.1: check enough quantity exist in storage")
+let order = (book: books[0], quantity: 10)
+print("Is there \(order.quantity) (\(order.book.title)) books in storage? ")
+let isOrderValid = order.book.isQuantityEnough(order: order.quantity)
+print( isOrderValid ? "yes, there are enough" : "No, we don't have enough books")
 
 //Q2.2
-print("Q2.2: في حال وجود كمية كافية، يتم إنقاص المخزون وفقًا للكمية المطلوبة في الفاتورة.")
+print("\nQ2.2: In case there is enough quantity of books, reduce it by the order amount")
+print("Ordering \(order.quantity) (\(order.book.title)) ")
+order.book.orderBooks(quantity: order.quantity)
